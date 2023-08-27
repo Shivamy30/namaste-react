@@ -1,8 +1,9 @@
-import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import RestaurantCard, {withPromotedLabel} from "./RestaurantCard";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   // Local State Variable - Super powerful variable
@@ -11,10 +12,10 @@ const Body = () => {
 
   const [searchText, setSearchText] = useState("");
   const onlineStatus = useOnlineStatus();
+  const {loggedInUser, setUserName} = useContext(UserContext);
 
   // Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
-  console.log("Body Rendered");
-
+  const RestaurantCardWithPromotedLabel = withPromotedLabel(RestaurantCard);
   useEffect(() => {
     fetchData();
   }, []);
@@ -50,17 +51,14 @@ const Body = () => {
             onClick={() => {
               // Filter the restraunt cards and update the UI
               // searchText
-              console.log(searchText);
-
               const filteredRestaurant = listOfRestaurants.filter((res) =>
                 res.data.name.toLowerCase().includes(searchText.toLowerCase())
               );
-
               setFilteredRestaurant(filteredRestaurant);
-            }}
-          >
-            Search
-          </button>
+            }}>Search</button>
+            <input type="text" className="border border-black p-1 mx-2" placeholder="change loggedInUser"
+            value={loggedInUser}
+            onChange={(e)=> setUserName(e.target.value)}/>
         </div>
         <div className="search m-4 p-4 flex items-center">
         <button
@@ -82,8 +80,8 @@ const Body = () => {
           <Link
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
-          >
-            <RestaurantCard resData={restaurant} />
+          >{ restaurant.info.isOpen?(<RestaurantCardWithPromotedLabel resData={restaurant} />):(<RestaurantCard resData={restaurant}/>)}
+            {/* <RestaurantCard resData={restaurant} /> */}
           </Link>
         ))}
       </div>

@@ -22,12 +22,25 @@ const RestaurantCard = (props) => {
       <h3 className="font-medium py-2 text-lg ">{name}</h3>
       <h4 className="font-normal text-sm text-gray-600">{cuisines.join(", ")}</h4>
       <div className="flex justify-between">
-      <h4>{avgRating} stars</h4>
-      <h4>{costForTwo}</h4>
-      <h4>{sla.slaString}</h4>
+        <h4>{avgRating}</h4>
+        <h4>{costForTwo}</h4>
+        <h4>{sla.slaString}</h4>
       </div>
     </div>
   );
 };
+
+
+// higher order components: which take as component and return a component with some twick.
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black p-1 my-4 mx-6 text-white rounded-lg">Open</label>
+        <RestaurantCard {...props} />
+      </div>
+    )
+  }
+}
 
 export default RestaurantCard;
