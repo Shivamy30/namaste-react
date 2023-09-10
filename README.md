@@ -78,3 +78,24 @@ import {Component} from "path";
  - Slice (cart slice)
  - Dispatch(action)
  - Selector
+
+
+ # Types of testing (developer)
+  - Unit Testing
+  - Integration Testing
+  - End to end testing 
+
+
+ # Setting up Testing in our App
+  - Install React Testing Library
+  - Install jest
+  - Install Bebel dependencies
+  - Configure Babel
+  - Configure Parcel Config file to desable default Bebel default configuration 
+  - jest configuration (npx jest --init)
+  - Install jsdom Library
+
+  - Install @babel/preset-react -> to make JSX work in test cases
+  - Include @babel/preset-react inside my babel Configuration
+  - Install @testing-library/jest-dom
+  - if expect. don't give suggestions Install-> npm install @types/jest

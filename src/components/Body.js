@@ -33,13 +33,14 @@ const Body = () => {
   };
 
   if(!onlineStatus) return <h1>you are offline!! please check your internet connection</h1>
-  return listOfRestaurants.length === 0 ? (
+
+  return !listOfRestaurants || listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
       <div className="flex">
         <div className="m-4 p-4">
-          <input
+          <input data-testid="searchInput"
             type="text"
             className="border border-solid border-black"
             value={searchText}
@@ -52,7 +53,7 @@ const Body = () => {
               // Filter the restraunt cards and update the UI
               // searchText
               const filteredRestaurant = listOfRestaurants.filter((res) =>
-                res.data.name.toLowerCase().includes(searchText.toLowerCase())
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
               setFilteredRestaurant(filteredRestaurant);
             }}>Search</button>
@@ -65,9 +66,9 @@ const Body = () => {
           className="px-4 py-2 bg-gray-100 m-4 rounded-lg"
           onClick={() => {
             const filteredList = listOfRestaurants.filter(
-              (res) => res.data.avgRating > 4
+              (res) => res.info.avgRating > 4
             );
-            setListOfRestraunt(filteredList);
+            setFilteredRestaurant(filteredList);
           }}
         >
           Top Rated Restaurants
